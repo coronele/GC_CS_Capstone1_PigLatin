@@ -1,0 +1,11 @@
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.exe
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.deps.json
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.runtimeconfig.json
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.runtimeconfig.dev.json
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.dll
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\bin\Debug\netcoreapp3.1\Capstone - Pig Latin.pdb
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\obj\Debug\netcoreapp3.1\Capstone - Pig Latin.csprojAssemblyReference.cache
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\obj\Debug\netcoreapp3.1\Capstone - Pig Latin.AssemblyInfoInputs.cache
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\obj\Debug\netcoreapp3.1\Capstone - Pig Latin.AssemblyInfo.cs
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\obj\Debug\netcoreapp3.1\Capstone - Pig Latin.dll
+C:\Users\coronele\source\repos\Capstone - Pig Latin\Capstone - Pig Latin\obj\Debug\netcoreapp3.1\Capstone - Pig Latin.pdb
