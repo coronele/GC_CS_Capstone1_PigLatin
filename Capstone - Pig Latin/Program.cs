@@ -34,6 +34,10 @@ namespace Capstone___Pig_Latin
                 continueProg = TryAgain("Would you like to translate another word/phrase? [y/n] ");
             }
             while (continueProg);
+            
+            // Exit program message
+            SetOutputColor();
+            Console.WriteLine("\n\nThank you for using the Pig Latin Translator!");
         }
 
         public static string GetUserInput(string message)
@@ -86,47 +90,181 @@ namespace Capstone___Pig_Latin
             return continueProgram;
         }
 
+        public static bool isAllCaps (string checkString)
+        {
+            for (int i = 0; i < (checkString.Length); i++)
+            {
+                if (!Char.IsUpper(checkString[i]))
+                {
+                    // If a lowercase letter (or a non-uppercase letter) is found, isAllCaps is false
+                    return false;
+                }
+            }
+            // If this is run, all previous letters were capital letters.
+            return true;
+        }
+
+        public static bool isTitle (string checkString)
+        {
+            // Check if first letter is caps
+            if (!Char.IsUpper(checkString[0]))
+            {
+                return false;
+            }
+            
+            // If first letter is caps, check if remaining letters are lowercase
+            for (int i = 1; i < (checkString.Length); i++)
+            {
+                if(!Char.IsLower(checkString[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool isAlpha (string checkString)
+        {
+            // Check if string only contains alpha characters
+            for (int i = 0; i < checkString.Length; i++)
+            {
+                // Allow apostrophes
+                if (checkString[i] == '\'')
+                {
+
+                }
+                else if (!char.IsLetter(checkString[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool hasNoVowels (string checkString)
+        {
+            // This method created to account for certain words with no vowels (usually contain a "y")
+            char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u'};
+
+            for (int i=0; i < checkString.Length; i++)
+            {
+                if (checkString.IndexOfAny(vowels) == -1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+         public static bool isNum (string checkString)
+        {
+            int intNum;
+            double dblNum;
+            bool isNumeric = true;
+
+            // Check if string can be interpreted as an integer. If so, return true.
+            if (isNumeric == int.TryParse(checkString, out intNum))
+            {
+                return isNumeric;
+            }
+
+            // Check if string can be interpreted as a double. If so, return true.
+            else if (isNumeric == double.TryParse(checkString, out dblNum))
+            {
+                return isNumeric;
+            }
+            
+            // String is not a number of any kind
+            else
+            {
+                isNumeric = false;
+            }
+
+            return isNumeric;
+        }
+
         public static void PigLatinTranslate(string userPhrase)
         {
-            string workPhrase, newWord, nextWordPart;
+            string workPhrase, newWord, nextWordPart, reTitle;
             string[] tempPhrase;
-            char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
+            char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u'};
+            bool isTitleCase, isAllCapitals;
             
             StringBuilder pigLatinPhrase = new StringBuilder();
             StringBuilder wordBuilder = new StringBuilder();
 
             // Convert phrase to lowercase
-            workPhrase = userPhrase.ToLower();  // string to preserve original user text
+            workPhrase = userPhrase;  // string to preserve original user text
             tempPhrase = workPhrase.Split();    // splits phrase into words
 
-
+            // Process each word
             for (int i=0; i < tempPhrase.Length; i++)
             {
-                if (tempPhrase[i].IndexOfAny(vowels)==0)
+                if (isNum(tempPhrase[i]))
+                {
+                    // If "word" is all numeric, just pass on the number as is.
+                    isAllCapitals = false;
+                    isTitleCase = false;
+                    newWord = tempPhrase[i];
+                }
+                else if (!isAlpha(tempPhrase[i]))
+                {
+                    // If "word" is not letters (apostrophes allowed), pass word as is
+                    isAllCapitals = false;
+                    isTitleCase = false;
+                    newWord = tempPhrase[i];
+                }
+                else if (tempPhrase[i].IndexOfAny(vowels)==0)
                 {
                     // First letter is a vowel
+                    isAllCapitals = isAllCaps(tempPhrase[i]);
+                    isTitleCase = isTitle(tempPhrase[i]);
+                    tempPhrase[i] = tempPhrase[i].ToLower();  // convert to lowercase
                     newWord = $"{tempPhrase[i]}way";
                 }
                 else
                 {
                     // First letter is a consonant
+                    isAllCapitals = isAllCaps(tempPhrase[i]);
+                    isTitleCase = isTitle(tempPhrase[i]);
+                    tempPhrase[i] = tempPhrase[i].ToLower();  // convert to lowercase
+
                     wordBuilder.Clear();
                     
-                    // Creates new starting at the first vowel and stores into wordBuilder
-                    wordBuilder.Append(tempPhrase[i].Substring(tempPhrase[i].IndexOfAny(vowels)));
-                    
-                    // string to capture newly created word part. Will be used to use Length property.
-                    nextWordPart = wordBuilder.ToString();
+                    if (hasNoVowels(tempPhrase[i]))  // check to see if word has no vowels
+                    {
+                        newWord = $"{tempPhrase[i]}way";
+                    }
+                    else
+                    {
+                        // Creates new starting at the first vowel and stores into wordBuilder
+                        wordBuilder.Append(tempPhrase[i].Substring(tempPhrase[i].IndexOfAny(vowels)));
 
-                    // Add into WordBuilder the first part of the original word from the first character to
-                    // to the character before the first vowel. (Length of original word - Length of the stored word part)
-                    wordBuilder.Append(tempPhrase[i].Substring(0,(tempPhrase[i].Length - nextWordPart.Length)));
-                    
-                    //  Add the "ay".  Because it's Pig Latin. Those are the rules.
-                    wordBuilder.Append("ay");
+                        // string to capture newly created word part. Will be used to use Length property.
+                        nextWordPart = wordBuilder.ToString();
 
-                    // Convert wordBuilder back into string newWord
-                    newWord = wordBuilder.ToString();
+                        // Add into WordBuilder the first part of the original word from the first character to
+                        // to the character before the first vowel. (Length of original word - Length of the stored word part)
+                        wordBuilder.Append(tempPhrase[i].Substring(0, (tempPhrase[i].Length - nextWordPart.Length)));
+
+                        //  Add the "ay".  Because it's Pig Latin. Those are the rules.
+                        wordBuilder.Append("ay");
+
+                        // Convert wordBuilder back into string newWord
+                        newWord = wordBuilder.ToString();
+                    }
+                }
+
+                // Restore original capitalization (Title case or all caps)
+                if (isAllCapitals)
+                {
+                    newWord = newWord.ToUpper();
+                }
+
+                if (isTitleCase)
+                {
+                    reTitle = newWord.Substring(0, 1).ToUpper();
+                    newWord = reTitle + newWord.Substring(1);
                 }
 
                 // Add a space before words besides the first one
